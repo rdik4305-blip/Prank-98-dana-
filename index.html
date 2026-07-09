@@ -3,141 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All-in-One Prank Simulator</title>
+    <title>Pro Prank Simulator v4.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .bg-wallet-main { background-color: #3b82f6; }
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        .pop-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        body { font-family: 'Plus+Jakarta+Sans', sans-serif; background-color: #f0f2f5; }
+        .gradient-header { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="p-4 flex justify-center">
 
-    <div id="app" class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col">
+    <div id="app" class="bg-white w-full max-w-md rounded-[2rem] shadow-2xl overflow-hidden min-h-[700px] flex flex-col border border-gray-100 relative">
         
-        <!-- Header -->
-        <div class="bg-wallet-main p-6 text-white text-center">
-            <h1 class="text-2xl font-bold">Simulator Prank</h1>
-            <p class="text-sm opacity-80">Tarik Saldo & Top Up Instan</p>
+        <!-- Status Message Box -->
+        <div id="status-box" class="hidden absolute top-0 left-0 right-0 p-4 text-white text-center font-bold text-xs z-50"></div>
+
+        <div class="gradient-header p-8 text-white text-center">
+            <h1 class="text-3xl font-extrabold tracking-tight">Prank Pro v4.0</h1>
+            <p class="text-xs opacity-80 mt-1">Update: 9 Juli 2026</p>
         </div>
 
-        <!-- Form Section -->
         <div id="form-container" class="p-6 flex-grow">
-            <label class="block text-gray-700 text-sm font-semibold mb-2">Pilih Layanan</label>
-            <select id="service-type" onchange="updateFormFields()" class="w-full p-3 border border-gray-300 rounded-xl outline-none mb-4 bg-gray-50">
-                <option value="E-Wallet">E-Wallet (DANA/OVO/DLL)</option>
-                <option value="Mobile Legends">Mobile Legends</option>
-                <option value="Free Fire">Free Fire</option>
-            </select>
-
-            <label id="input-label" class="block text-gray-700 text-sm font-semibold mb-2">Nomor HP</label>
-            <input type="text" id="account-id" placeholder="08123456789" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none mb-4">
-            
-            <label class="block text-gray-700 text-sm font-semibold mb-2">Pilih Nominal</label>
-            <select id="amount" class="w-full p-3 border border-gray-300 rounded-xl outline-none mb-6">
-                <!-- Nominal akan diisi oleh JavaScript -->
-            </select>
-
-            <button onclick="startPrank()" class="w-full bg-wallet-main text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition duration-300 transform active:scale-95">
-                Proses Sekarang
-            </button>
-        </div>
-
-        <!-- Success Section -->
-        <div id="success-container" class="hidden flex flex-col items-center py-10 fade-in flex-grow">
-            <div class="w-20 h-20 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center text-5xl mb-4 font-bold pop-in shadow-inner border-4 border-blue-200">✓</div>
-            <h2 class="text-xl font-bold text-gray-800">Berhasil!</h2>
-            <p class="text-gray-600 text-center mt-2 px-6 text-sm">
-                <span id="display-amount" class="font-bold text-blue-600"></span> 
-                berhasil diproses ke <span id="display-target" class="font-bold"></span>.
-            </p>
-            <button onclick="closeSuccess()" class="mt-8 px-8 py-3 bg-blue-500 text-white rounded-xl font-semibold hover:bg-blue-600 transition">Lihat Riwayat</button>
-        </div>
-
-        <!-- History Section -->
-        <div id="history-container" class="hidden p-6 flex-grow fade-in">
-            <h2 class="text-lg font-bold text-gray-800 mb-4">Riwayat Transaksi</h2>
-            <div id="history-list" class="space-y-3">
+            <div class="mb-5">
+                <label class="block text-gray-500 text-[10px] font-bold mb-2 uppercase">Pilih Layanan</label>
+                <select id="service-type" onchange="updateFormFields()" class="w-full p-4 bg-gray-50 rounded-2xl font-bold text-gray-800 border border-gray-200">
+                    <option value="DANA">DANA</option>
+                    <option value="OVO">OVO</option>
+                    <option value="GoPay">GoPay</option>
+                    <option value="ShopeePay">ShopeePay</option>
+                    <option value="LinkAja">LinkAja</option>
+                    <option value="Mobile Legends">Mobile Legends</option>
+                    <option value="Free Fire">Free Fire</option>
+                    <option value="PUBG Mobile">PUBG Mobile</option>
+                    <option value="Roblox">Roblox</option>
+                    <option value="Valorant">Valorant</option>
+                    <option value="Genshin Impact">Genshin Impact</option>
+                    <option value="Honor of Kings">Honor of Kings</option>
+                </select>
             </div>
-            <button onclick="resetApp()" class="w-full mt-8 py-3 border border-gray-300 text-gray-600 rounded-xl font-semibold hover:bg-gray-100">Kembali ke Menu</button>
-        </div>
 
-        <!-- Footer -->
-        <div class="bg-gray-50 p-4 text-center border-t">
-            <p class="text-[10px] text-gray-400 italic">PERINGATAN: Ini hanya aplikasi iseng (prank).</p>
+            <div class="mb-5">
+                <label id="input-label" class="block text-gray-500 text-[10px] font-bold mb-2 uppercase">Nomor HP/ID</label>
+                <input type="text" id="account-id" placeholder="Masukkan ID atau Nomor..." class="w-full p-4 bg-gray-50 rounded-2xl font-bold border border-gray-200">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-500 text-[10px] font-bold mb-2 uppercase">Pilih Nominal</label>
+                <select id="amount" class="w-full p-4 bg-gray-50 rounded-2xl font-bold text-indigo-600 border border-gray-200"></select>
+            </div>
+
+            <button onclick="startPrank()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-extrabold hover:bg-indigo-700 transition active:scale-[0.98]">Tarik Saldo Sekarang</button>
+            
+            <div class="mt-8">
+                <h3 class="text-[10px] font-bold text-gray-400 uppercase mb-3">Riwayat Terbaru</h3>
+                <div id="mini-history" class="space-y-2"></div>
+            </div>
         </div>
     </div>
 
     <script>
         const config = {
-            'E-Wallet': { label: 'Nomor HP', placeholder: '08123456789', amounts: ['Rp 50.000', 'Rp 100.000', 'Rp 500.000'] },
-            'Mobile Legends': { label: 'User ID & Zone ID', placeholder: '12345678 (1234)', amounts: ['86 Diamonds', '172 Diamonds', '257 Diamonds'] },
-            'Free Fire': { label: 'Player ID', placeholder: '123456789', amounts: ['70 Diamonds', '140 Diamonds', '355 Diamonds'] }
+            'DANA': { label: 'Nomor HP', amounts: ['Rp 10.000', 'Rp 25.000', 'Rp 50.000', 'Rp 100.000', 'Rp 200.000', 'Rp 500.000', 'Rp 1.000.000'] },
+            'OVO': { label: 'Nomor HP', amounts: ['Rp 10.000', 'Rp 25.000', 'Rp 50.000', 'Rp 100.000', 'Rp 200.000', 'Rp 500.000', 'Rp 1.000.000'] },
+            'GoPay': { label: 'Nomor HP', amounts: ['Rp 10.000', 'Rp 25.000', 'Rp 50.000', 'Rp 100.000', 'Rp 200.000', 'Rp 500.000', 'Rp 1.000.000'] },
+            'ShopeePay': { label: 'Nomor HP', amounts: ['Rp 10.000', 'Rp 25.000', 'Rp 50.000', 'Rp 100.000', 'Rp 200.000', 'Rp 500.000'] },
+            'LinkAja': { label: 'Nomor HP', amounts: ['Rp 10.000', 'Rp 25.000', 'Rp 50.000', 'Rp 100.000', 'Rp 200.000'] },
+            'Mobile Legends': { label: 'User ID', amounts: ['86 Diamonds', '172 Diamonds', '257 Diamonds', '514 Diamonds', '1030 Diamonds', '2195 Diamonds', '5000 Diamonds'] },
+            'Free Fire': { label: 'Player ID', amounts: ['70 Diamonds', '140 Diamonds', '355 Diamonds', '720 Diamonds', '1440 Diamonds', '2180 Diamonds', '5600 Diamonds'] },
+            'PUBG Mobile': { label: 'Character ID', amounts: ['60 UC', '325 UC', '660 UC', '1800 UC', '3850 UC', '8100 UC'] },
+            'Roblox': { label: 'Username', amounts: ['80 Robux', '400 Robux', '800 Robux', '1700 Robux', '4500 Robux', '10000 Robux'] },
+            'Valorant': { label: 'Riot ID', amounts: ['125 VP', '420 VP', '750 VP', '1450 VP', '2800 VP', '5500 VP'] },
+            'Genshin Impact': { label: 'UID', amounts: ['60 Genesis', '300 Genesis', '980 Genesis', '1980 Genesis', '3280 Genesis', '6480 Genesis'] },
+            'Honor of Kings': { label: 'Player ID', amounts: ['60 Tokens', '300 Tokens', '680 Tokens', '1280 Tokens', '2580 Tokens', '6480 Tokens'] }
         };
 
         let history = [];
+
+        function showMessage(text, isError = true) {
+            const box = document.getElementById('status-box');
+            box.innerText = text;
+            box.classList.remove('hidden', 'bg-red-500', 'bg-green-500');
+            box.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+            setTimeout(() => box.classList.add('hidden'), 3000);
+        }
 
         function updateFormFields() {
             const service = document.getElementById('service-type').value;
             const data = config[service];
             document.getElementById('input-label').innerText = data.label;
-            document.getElementById('account-id').placeholder = data.placeholder;
-            document.getElementById('account-id').value = '';
-            
             const amountSelect = document.getElementById('amount');
-            amountSelect.innerHTML = data.amounts.map(amt => `<option value="${amt}">${amt}</option>`).join('');
+            amountSelect.innerHTML = '';
+            data.amounts.forEach(amt => {
+                const opt = document.createElement('option');
+                opt.value = amt;
+                opt.innerText = amt;
+                amountSelect.appendChild(opt);
+            });
         }
-
-        // Initialize on load
-        window.onload = updateFormFields;
 
         function startPrank() {
-            const id = document.getElementById('account-id').value;
+            const target = document.getElementById('account-id').value;
             const amount = document.getElementById('amount').value;
             const service = document.getElementById('service-type').value;
-
-            if (id.length < 5) {
-                alert("Masukkan data yang valid!");
+            
+            if(!target) {
+                showMessage('Harap masukkan ID atau Nomor tujuan!');
                 return;
             }
-
-            history.push({ service, id, amount, date: new Date().toLocaleTimeString() });
-
-            document.getElementById('form-container').classList.add('hidden');
-            document.getElementById('success-container').classList.remove('hidden');
             
-            document.getElementById('display-amount').innerText = amount;
-            document.getElementById('display-target').innerText = id;
+            history.unshift({ service, target, amount });
+            renderHistory();
+            showMessage('Penarikan Berhasil! Saldo/Item akan masuk dalam 1x24 jam.', false);
         }
 
-        function closeSuccess() {
-            document.getElementById('success-container').classList.add('hidden');
-            document.getElementById('history-container').classList.remove('hidden');
-            
-            const list = document.getElementById('history-list');
-            list.innerHTML = history.map(item => `
-                <div class="p-4 border rounded-xl flex justify-between items-center bg-gray-50">
-                    <div>
-                        <p class="font-bold text-sm">${item.service}</p>
-                        <p class="text-xs text-gray-500">${item.id}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-bold text-blue-600 text-sm">${item.amount}</p>
-                        <p class="text-[10px] text-green-500 font-semibold">Berhasil</p>
-                    </div>
+        function renderHistory() {
+            const list = document.getElementById('mini-history');
+            list.innerHTML = history.slice(0, 5).map(h => `
+                <div class="text-[10px] p-2 bg-gray-50 rounded-lg flex justify-between border-l-4 border-indigo-600 fade-in">
+                    <span class="font-bold">${h.service}</span>
+                    <span class="text-indigo-600">${h.amount}</span>
                 </div>
             `).join('');
         }
 
-        function resetApp() {
-            document.getElementById('history-container').classList.add('hidden');
-            document.getElementById('form-container').classList.remove('hidden');
-            document.getElementById('account-id').value = '';
-        }
+        window.onload = updateFormFields;
     </script>
 </body>
 </html>
